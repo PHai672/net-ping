@@ -3,18 +3,19 @@ from ping3 import ping
 from influxdb_client import InfluxDBClient, Point, WriteOptions
 from influxdb_client.client.write_api import SYNCHRONOUS
 import time
+import os
 import datetime
 
 # ==== CONFIG ====
 BRANCHES_FILE = "branches.csv"
-INFLUX_URL = "http://10.0.7.72:8086/"
-INFLUX_TOKEN = "UZ8JIsMkoW0hpqsI_rFgLN7IK7lwtcKxDeEpTcqHW0PsjLa4Yo4ReaQiDW_Fb-nOHdurI85ZCc06__g8o48ztw=="
-INFLUX_ORG = "myorg"
-INFLUX_BUCKET = "netmonitor"
+INFLUXDB_URL = os.environ.get("INFLUXDB_URL")
+INFLUXDB_TOKEN = os.environ.get("INFLUXDB_TOKEN")
+INFLUXDB_BUCKET = os.environ.get("INFLUXDB_BUCKET")
+INFLUXDB_ORG = os.environ.get("INFLUXDB_ORG")
 
 # ==== Connect to InfluxDB ====
-client = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG)
-write_api = client.write_api(write_options=SYNCHRONOUS)
+client = InfluxDBClient(url=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
+write_api = client.write_api()
 
 # ==== Load branches ====
 branches = pd.read_csv(BRANCHES_FILE)
@@ -38,7 +39,7 @@ def write_to_influx(branch, result):
         .field("latency", result["latency"] if result["latency"] else 0)
         .time(datetime.datetime.utcnow())
         )
-        write_api.write(bucket=INFLUX_BUCKET, org=INFLUX_ORG, record=point)
+        write_api.write(bucket=INFLUXDB_BUCKET, org=INFLUXDB_ORG, record=point)
     except Exception as e:
         print(f"[ERROR] Failed to write to InfluxDB: {e}")
 
