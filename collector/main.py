@@ -8,8 +8,8 @@ import datetime
 # ==== CONFIG ====
 BRANCHES_FILE = "branches.csv"
 INFLUX_URL = "http://localhost:8086"
-INFLUX_TOKEN = "my-token"
-INFLUX_ORG = "my-org"
+INFLUX_TOKEN = "C3Xd4Svt1qaYC8b52UiKG-0FAwjy7RcP0MHhE4YbgGXWVtNc-MnJ0Tywjv95O2CPvcJ4hpH0mOeLzDIGqEHRsw=="
+INFLUX_ORG = "phai-org"
 INFLUX_BUCKET = "network"
 
 # ==== Connect to InfluxDB ====
