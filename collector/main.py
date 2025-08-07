@@ -8,7 +8,7 @@ import datetime
 # ==== CONFIG ====
 BRANCHES_FILE = "branches.csv"
 INFLUX_URL = "http://10.0.7.72:8086/"
-INFLUX_TOKEN = "C3Xd4Svt1qaYC8b52UiKG-0FAwjy7RcP0MHhE4YbgGXWVtNc-MnJ0Tywjv95O2CPvcJ4hpH0mOeLzDIGqEHRsw=="
+INFLUX_TOKEN = "UZ8JIsMkoW0hpqsI_rFgLN7IK7lwtcKxDeEpTcqHW0PsjLa4Yo4ReaQiDW_Fb-nOHdurI85ZCc06__g8o48ztw=="
 INFLUX_ORG = "phai-org"
 INFLUX_BUCKET = "network"
 
