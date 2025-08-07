@@ -12,7 +12,7 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
       - DOCKER_INFLUXDB_INIT_ORG=myorg
       - DOCKER_INFLUXDB_INIT_BUCKET=netmonitor
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=secret-token
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=UZ8JIsMkoW0hpqsI_rFgLN7IK7lwtcKxDeEpTcqHW0PsjLa4Yo4ReaQiDW_Fb-nOHdurI85ZCc06__g8o48ztw==
 
   collector:
     build:
@@ -22,7 +22,7 @@ services:
       - ./collector/branches.csv:/app/branches.csv
     environment:
       - INFLUXDB_URL=http://influxdb:8086
-      - INFLUXDB_TOKEN=secret-token
+      - INFLUXDB_TOKEN=UZ8JIsMkoW0hpqsI_rFgLN7IK7lwtcKxDeEpTcqHW0PsjLa4Yo4ReaQiDW_Fb-nOHdurI85ZCc06__g8o48ztw==
       - INFLUXDB_BUCKET=netmonitor
       - INFLUXDB_ORG=myorg
     depends_on:
