@@ -13,7 +13,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=myorg
       - DOCKER_INFLUXDB_INIT_BUCKET=netmonitor
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=UZ8JIsMkoW0hpqsI_rFgLN7IK7lwtcKxDeEpTcqHW0PsjLa4Yo4ReaQiDW_Fb-nOHdurI85ZCc06__g8o48ztw==
-
+    
   collector:
     build:
       context: ./collector
@@ -28,5 +28,16 @@ services:
     depends_on:
       - influxdb
 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - influxdb
+
 volumes:
   influxdb-data:
+  grafana-data:
