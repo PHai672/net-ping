@@ -36,7 +36,7 @@ def write_to_influx(branch, result):
         Point("branch_status")
         .tag("branch", branch)
         .field("status", 1 if result["status"] == "up" else 0)
-        .field("latency", float(result["latency"]) if result["latency"] is not None else 0.0)
+        .field("latency", float(result["latency"]) if result["latency"] is not None else 0)
         .time(datetime.datetime.utcnow())
         )
         write_api.write(bucket=INFLUXDB_BUCKET, org=INFLUXDB_ORG, record=point)
