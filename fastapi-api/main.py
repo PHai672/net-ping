@@ -31,3 +31,13 @@ def delete_branch(ip: str):
         return {"message": "Branch deleted"}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # หรือระบุ IP frontend ก็ได้
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
