@@ -1,3 +1,5 @@
 fastapi
-uvicorn
-pandas
+uvicorn[standard]
+sqlalchemy
+pydantic
+
