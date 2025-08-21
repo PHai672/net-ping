@@ -20,6 +20,7 @@ services:
     container_name: collector
     volumes:
       - ./collector/branches.csv:/app/branches.csv
+      - branches-csv:/app/branches.csv
     environment:
       - INFLUXDB_URL=http://influxdb:8086
       - INFLUXDB_TOKEN=UZ8JIsMkoW0hpqsI_rFgLN7IK7lwtcKxDeEpTcqHW0PsjLa4Yo4ReaQiDW_Fb-nOHdurI85ZCc06__g8o48ztw==
@@ -41,3 +42,4 @@ services:
 volumes:
   influxdb-data:
   grafana-data:
+  branches-csv:

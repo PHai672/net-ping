@@ -30,6 +30,11 @@ def ping_branch(ip):
     except Exception as e:
         return {"status": "error", "latency": None}
 
+# ==== Load branches ==== (move into function)
+def load_branches():
+    return pd.read_csv(BRANCHES_FILE)
+
+
 def write_to_influx(branch, result):
     try:
         point = (
@@ -45,11 +50,12 @@ def write_to_influx(branch, result):
 
 def main():
     while True:
+        branches = load_branches()  # โหลดใหม่ทุกครั้ง
         for _, row in branches.iterrows():
             result = ping_branch(row["ip"])
             print(f"{datetime.datetime.now().isoformat()} | {row['branch_name']}: {result}")
             write_to_influx(row["branch_name"], result)
-        time.sleep(60)  # ping ทุก 60 วินาที
+        time.sleep(60)
 
 if __name__ == "__main__":
     main()
