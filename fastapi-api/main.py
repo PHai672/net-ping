@@ -1,43 +1,24 @@
-from fastapi import FastAPI, HTTPException
-from models import Branch
-import crud
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy.orm import Session
+import crud, models, schemas
+from database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-@app.get("/branches")
-def get_branches():
-    return crud.read_all_branches()
-
-@app.post("/branches")
-def create_branch(branch: Branch):
+# Dependency สำหรับใช้งาน DB
+def get_db():
+    db = SessionLocal()
     try:
-        crud.add_branch(branch)
-        return {"message": "Branch added"}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        yield db
+    finally:
+        db.close()
 
-@app.put("/branches/{ip}")
-def update_branch(ip: str, branch: Branch):
-    try:
-        crud.update_branch(ip, branch)
-        return {"message": "Branch updated"}
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+@app.get("/branches", response_model=list[schemas.Branch])
+def read_branches(db: Session = Depends(get_db)):
+    return crud.get_branches(db)
 
-@app.delete("/branches/{ip}")
-def delete_branch(ip: str):
-    try:
-        crud.delete_branch(ip)
-        return {"message": "Branch deleted"}
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
-
-from fastapi.middleware.cors import CORSMiddleware
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # หรือระบุ IP frontend ก็ได้
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+@app.post("/branches", response_model=schemas.Branch)
+def create_branch(branch: schemas.BranchCreate, db: Session = Depends(get_db)):
+    return crud.create_branch(db, branch)
