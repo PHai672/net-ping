@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-import models, schemas
+from . import models, schemas
 
 def get_branches(db: Session):
     return db.query(models.Branch).all()
